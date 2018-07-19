@@ -15,7 +15,7 @@ class MemberTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         addRefresh()
-        
+        refresh()
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -55,7 +55,7 @@ class MemberTableViewController: UITableViewController {
     }
     
     func refresh() {
-        Fire
+        
     }
 
     /*
