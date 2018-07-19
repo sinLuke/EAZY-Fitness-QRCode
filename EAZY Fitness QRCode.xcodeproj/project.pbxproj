@@ -17,6 +17,9 @@
 		27A525592100E3D9001338C0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 27A525582100E3D8001338C0 /* GoogleService-Info.plist */; };
 		56E400A7B68558BF7E32E65B /* Pods_EAZY_Fitness_QRCodeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A0A28129194F51E6FFE6225 /* Pods_EAZY_Fitness_QRCodeTests.framework */; };
 		7166A30D5F611C4CF4DB162D /* Pods_EAZY_Fitness_QRCodeUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B8E188197E82E76BE7CA227 /* Pods_EAZY_Fitness_QRCodeUITests.framework */; };
+		A3C1A3752100EDA60001D551 /* MemberTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C1A3742100EDA60001D551 /* MemberTableViewController.swift */; };
+		A3C1A3772100EDAF0001D551 /* AdminTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C1A3762100EDAF0001D551 /* AdminTableViewController.swift */; };
+		A3C1A3792100EDD20001D551 /* QRCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C1A3782100EDD20001D551 /* QRCodeViewController.swift */; };
 		D90039EEB133FCF7A3F32927 /* Pods_EAZY_Fitness_QRCode.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B990BCA10A5FD310BF00CBFF /* Pods_EAZY_Fitness_QRCode.framework */; };
 /* End PBXBuildFile section */
 
@@ -58,6 +61,9 @@
 		954615BF50DB9B31C6824DDA /* Pods-EAZY Fitness QRCodeUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EAZY Fitness QRCodeUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-EAZY Fitness QRCodeUITests/Pods-EAZY Fitness QRCodeUITests.release.xcconfig"; sourceTree = "<group>"; };
 		9B8E188197E82E76BE7CA227 /* Pods_EAZY_Fitness_QRCodeUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EAZY_Fitness_QRCodeUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9DC61462FCB70A8DE01B67D8 /* Pods-EAZY Fitness QRCode.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EAZY Fitness QRCode.release.xcconfig"; path = "Pods/Target Support Files/Pods-EAZY Fitness QRCode/Pods-EAZY Fitness QRCode.release.xcconfig"; sourceTree = "<group>"; };
+		A3C1A3742100EDA60001D551 /* MemberTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberTableViewController.swift; sourceTree = "<group>"; };
+		A3C1A3762100EDAF0001D551 /* AdminTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminTableViewController.swift; sourceTree = "<group>"; };
+		A3C1A3782100EDD20001D551 /* QRCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeViewController.swift; sourceTree = "<group>"; };
 		A7E7AD4B904E30EDCF405E2E /* Pods-EAZY Fitness QRCodeUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EAZY Fitness QRCodeUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EAZY Fitness QRCodeUITests/Pods-EAZY Fitness QRCodeUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		B990BCA10A5FD310BF00CBFF /* Pods_EAZY_Fitness_QRCode.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EAZY_Fitness_QRCode.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB765992BFF163C5FC4AAE19 /* Pods-EAZY Fitness QRCodeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EAZY Fitness QRCodeTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-EAZY Fitness QRCodeTests/Pods-EAZY Fitness QRCodeTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -123,6 +129,9 @@
 				27A525312100E26A001338C0 /* Assets.xcassets */,
 				27A525332100E26A001338C0 /* LaunchScreen.storyboard */,
 				27A525362100E26A001338C0 /* Info.plist */,
+				A3C1A3742100EDA60001D551 /* MemberTableViewController.swift */,
+				A3C1A3762100EDAF0001D551 /* AdminTableViewController.swift */,
+				A3C1A3782100EDD20001D551 /* QRCodeViewController.swift */,
 			);
 			path = "EAZY Fitness QRCode";
 			sourceTree = "<group>";
@@ -381,8 +390,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A3C1A3752100EDA60001D551 /* MemberTableViewController.swift in Sources */,
+				A3C1A3772100EDAF0001D551 /* AdminTableViewController.swift in Sources */,
 				27A5252D2100E268001338C0 /* ViewController.swift in Sources */,
 				27A5252B2100E268001338C0 /* AppDelegate.swift in Sources */,
+				A3C1A3792100EDD20001D551 /* QRCodeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

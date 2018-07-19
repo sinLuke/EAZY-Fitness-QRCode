@@ -90,10 +90,10 @@
             </objects>
             <point key="canvasLocation" x="136.80000000000001" y="132.68365817091455"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Member Table View Controller-->
         <scene sceneID="KUO-ll-kh2">
             <objects>
-                <tableViewController id="eAl-xx-56g" sceneMemberID="viewController">
+                <tableViewController id="eAl-xx-56g" customClass="MemberTableViewController" customModule="EAZY_Fitness_QRCode" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="JDB-fA-SQv">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -118,10 +118,10 @@
             </objects>
             <point key="canvasLocation" x="865" y="-222"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Admin Table View Controller-->
         <scene sceneID="Qfx-PR-p5D">
             <objects>
-                <tableViewController id="VHl-XR-EJa" sceneMemberID="viewController">
+                <tableViewController id="VHl-XR-EJa" customClass="AdminTableViewController" customModule="EAZY_Fitness_QRCode" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="zqK-r2-hfr">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -146,10 +146,10 @@
             </objects>
             <point key="canvasLocation" x="865" y="444"/>
         </scene>
-        <!--View Controller-->
+        <!--Code View Controller-->
         <scene sceneID="igX-SL-Xpt">
             <objects>
-                <viewController id="6Gp-7k-hjg" sceneMemberID="viewController">
+                <viewController id="6Gp-7k-hjg" customClass="QRCodeViewController" customModule="EAZY_Fitness_QRCode" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="EiC-0M-jhC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
