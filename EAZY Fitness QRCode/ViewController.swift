@@ -10,8 +10,10 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    @IBOutlet weak var versionLabel: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
+        versionLabel.text = "版本 v\(Bundle.main.infoDictionary?["CFBundleShortVersionString"] ?? "")"
         // Do any additional setup after loading the view, typically from a nib.
     }
 
