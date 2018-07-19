@@ -8,7 +8,11 @@
 
 import UIKit
 import Firebase
+import FirebaseFirestore
+
 class MemberTableViewController: UITableViewController {
+    
+    var MemberList : [String:String] = [:]
     
     let _refreshControl = UIRefreshControl()
 
@@ -32,12 +36,12 @@ class MemberTableViewController: UITableViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return self.MemberList.count
     }
     
     func addRefresh(){
@@ -55,18 +59,27 @@ class MemberTableViewController: UITableViewController {
     }
     
     func refresh() {
-        
+        Firestore.firestore().collection("QRCODE").getDocuments { (snap, err) in
+            if let snap = snap {
+                for docs in snap.documents {
+                    if let MemberID = docs.data()["MemberID"] as? Int{
+                        self.MemberList[docs.documentID] = "\(MemberID)"
+                    }
+                }
+            }
+            self.tableView.reloadData()
+        }
     }
 
-    /*
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
+        let qrcodeString = self.MemberList.keys.sorted()[indexPath.row]
+        cell.textLabel?.text = self.MemberList[qrcodeString]
+        cell.detailTextLabel?.text = qrcodeString
         return cell
     }
-    */
+    
 
     /*
     // Override to support conditional editing of the table view.
