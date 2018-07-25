@@ -10,16 +10,37 @@ import UIKit
 import Firebase
 import FirebaseFirestore
 
-class MemberTableViewController: UITableViewController {
+class MemberTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    var MemberList : [String:String] = [:]
+    var MemberList : [Int:String] = [:]
+    
+    var filteredMemberList : [Int:String] = [:]
+    let searchController = UISearchController(searchResultsController: nil)
+    
+    @IBOutlet weak var activity: UIActivityIndicatorView!
+    @IBOutlet weak var tableView: UITableView!
+    
+    var selectedMemberID: String?
+    var selectedQRImage: UIImage?
     
     let _refreshControl = UIRefreshControl()
+    
+    var loading: Bool = false{
+        didSet{
+            self.activity.isHidden = !loading
+            if loading {
+                self.activity.startAnimating()
+            } else {
+                self.activity.stopAnimating()
+            }
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         addRefresh()
         refresh()
+        searchSetup()
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -34,13 +55,16 @@ class MemberTableViewController: UITableViewController {
 
     // MARK: - Table view data source
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
+        if isFiltering() {
+            return self.filteredMemberList.count
+        }
         return self.MemberList.count
     }
     
@@ -59,28 +83,81 @@ class MemberTableViewController: UITableViewController {
     }
     
     func refresh() {
+        self.loading = true
         Firestore.firestore().collection("QRCODE").getDocuments { (snap, err) in
+            self.loading = false
             if let snap = snap {
                 for docs in snap.documents {
                     if let MemberID = docs.data()["MemberID"] as? Int{
-                        self.MemberList[docs.documentID] = "\(MemberID)"
+                        if self.MemberList[MemberID] == nil {
+                            self.MemberList[MemberID] = docs.documentID
+                        }
                     }
                 }
             }
             self.tableView.reloadData()
         }
     }
-
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-        let qrcodeString = self.MemberList.keys.sorted()[indexPath.row]
-        cell.textLabel?.text = self.MemberList[qrcodeString]
-        cell.detailTextLabel?.text = qrcodeString
-        return cell
+        if isFiltering(){
+            let qrcodeMemberID = self.filteredMemberList.keys.sorted()[indexPath.row]
+            cell.detailTextLabel?.text = self.filteredMemberList[qrcodeMemberID]
+            cell.detailTextLabel?.textColor = UIColor.gray
+            cell.textLabel?.text = "\(qrcodeMemberID)"
+            return cell
+        } else {
+            let qrcodeMemberID = self.MemberList.keys.sorted()[indexPath.row]
+            cell.detailTextLabel?.text = self.MemberList[qrcodeMemberID]
+            cell.detailTextLabel?.textColor = UIColor.gray
+            cell.textLabel?.text = "\(qrcodeMemberID)"
+            return cell
+        }
     }
     
-
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if isFiltering(){
+            let qrcodeMemberID = self.filteredMemberList.keys.sorted()[indexPath.row]
+            if let qrcodeString = self.filteredMemberList[qrcodeMemberID] {
+                selectedMemberID = "\(qrcodeMemberID)"
+                selectedQRImage = QRcode.make(from: qrcodeString)
+                self.performSegue(withIdentifier: "qrcode", sender: self)
+            } else {
+                Alert.show(title: "无法找到对应的ID（MemberID:\(qrcodeMemberID)）", err: "请稍后重试", cvc: self)
+            }
+        } else {
+            let qrcodeMemberID = self.MemberList.keys.sorted()[indexPath.row]
+            if let qrcodeString = self.MemberList[qrcodeMemberID] {
+                selectedMemberID = "\(qrcodeMemberID)"
+                selectedQRImage = QRcode.make(from: qrcodeString)
+                self.performSegue(withIdentifier: "qrcode", sender: self)
+            } else {
+                Alert.show(title: "无法找到对应的ID（MemberID:\(qrcodeMemberID)）", err: "请稍后重试", cvc: self)
+            }
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let dvc = segue.destination as? QRCodeViewController {
+            dvc.qrcodeMemberID = self.selectedMemberID
+            dvc.qrcodeImage = self.selectedQRImage
+        }
+    }
+    
+    func searchSetup(){
+        // Setup the Search Controller
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Search Candies"
+        navigationItem.searchController = searchController
+        definesPresentationContext = true
+        // MARK: - Private instance methods
+    }
+    
+    
+    
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -126,4 +203,29 @@ class MemberTableViewController: UITableViewController {
     }
     */
 
+}
+
+extension MemberTableViewController: UISearchResultsUpdating {
+    // MARK: - UISearchResultsUpdating Delegate
+    func updateSearchResults(for searchController: UISearchController) {
+        filterContentForSearchText(searchController.searchBar.text!)
+    }
+    
+    func isFiltering() -> Bool {
+        return searchController.isActive && !searchBarIsEmpty()
+    }
+    
+    func searchBarIsEmpty() -> Bool {
+        // Returns true if the text is empty or nil
+        return searchController.searchBar.text?.isEmpty ?? true
+    }
+    
+    func filterContentForSearchText(_ searchText: String, scope: String = "All") {
+        filteredMemberList = MemberList.filter({ (key: Int, value: String) -> Bool in
+            let keyString = "\(key)"
+            return keyString.lowercased().contains(searchText.lowercased())
+        })
+        tableView.reloadData()
+    }
+    
 }
